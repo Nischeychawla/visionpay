@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VisionPay - Assistive Voice & Gesture UPI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <header>
+    <h1>Vision<span>Pay</span></h1>
+    <div id="statusBadge" class="status-badge">STANDBY</div>
+  </header>
+
+  <main class="scanner-section">
+    <!-- Camera Section -->
+    <div class="video-container" id="videoBox">
+      <video id="cameraFeed" autoplay playsinline muted></video>
+      <div class="reticle"></div>
+    </div>
+
+    <!-- Direction / Audio Prompt Box -->
+    <div class="audio-feedback-card" id="feedbackCard">
+      <p id="instructionText">Tap anywhere to activate VisionPay</p>
+    </div>
+
+    <!-- Merchant Confirmation Card -->
+    <div id="merchantSheet" class="merchant-sheet hidden">
+      <div class="verified-tag">✓ Verified Merchant</div>
+      <p id="merchantName" class="payee-name">--</p>
+      <p id="merchantVpa" class="payee-vpa">--</p>
+      
+      <div class="amount-entry">
+        <label for="amountInput">Amount to Pay (INR)</label>
+        <input type="number" id="amountInput" value="50" min="1" step="1">
+      </div>
+
+      <!-- Action Choice: Tap or Voice -->
+      <button id="proceedPayBtn" class="primary-btn">Tap to Pay / Draw PIN</button>
+      <div class="voice-hint">🎙️ Or simply say <strong>"YES"</strong> to pay</div>
+    </div>
+  </main>
+
+  <!-- Fullscreen Gesture PIN Pad -->
+  <div id="pinModal" class="pin-modal hidden">
+    <div class="pin-header">
+      <h2>Draw Secret PIN</h2>
+      <p id="pinSubtext">Draw 4 digits one by one on the screen</p>
+      <div class="pin-indicators" id="pinIndicators">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="gestureCanvas"></canvas>
+    </div>
+
+    <div class="pin-actions">
+      <button id="cancelPinBtn" class="secondary-btn">Cancel</button>
+      <button id="clearStrokeBtn" class="secondary-btn">Erase Digit</button>
+    </div>
+  </div>
+
+  <canvas id="captureCanvas" style="display:none;"></canvas>
+
+  <script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/pin_pad.js') }}"></script>
+</body>
+</html>
